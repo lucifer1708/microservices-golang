@@ -13,24 +13,7 @@ import (
 	"strconv"
 )
 
-func takeArgs() (string, int) {
-	// argumentgiven := os.Args[1]
-	var s string
-	flag.StringVar(&s, "s", "", "Search for given query")
-	page := flag.Int("n", 5, "# of Pages")
-	flag.Parse()
-	n := *page
-	if len(s) != 0 {
-		return s, n
-	} else {
-		fmt.Println("add some argument")
-		os.Exit(1)
-	}
-	return "", n
-}
-
 func main() {
-
 	apiurl, err := url.Parse("https://wallhaven.cc/api/v1/search")
 	checkNil(err)
 	values := apiurl.Query()
@@ -64,12 +47,28 @@ func main() {
 	}
 }
 
+// This function takes arguments from the flags specified by user
+func takeArgs() (string, int) {
+	var s string
+	flag.StringVar(&s, "s", "", "Search for given query")
+	page := flag.Int("n", 5, "# of Pages")
+	flag.Parse()
+	n := *page
+	if len(s) != 0 {
+		return s, n
+	} else {
+		fmt.Println("add some argument")
+		os.Exit(1)
+	}
+	return "", n
+}
+
+// Function to Download file from url. It takes param title i.e. file name , and url.
 func Downloadfile(title string, url string) {
 	// Get the data
 	resp, err := http.Get(url)
 	checkNil(err)
 	defer resp.Body.Close()
-
 	out, err := os.Create(title)
 	checkNil(err)
 	defer out.Close()
@@ -79,12 +78,14 @@ func Downloadfile(title string, url string) {
 	}
 }
 
+// CheckNil function follows the principle of DRY
 func checkNil(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
 
+// structs to parse Json fetched from API
 type Response struct {
 	Data Data `json:"data"`
 }
