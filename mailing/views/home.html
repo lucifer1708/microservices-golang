@@ -1,11 +1,55 @@
 {{define "home.html"}}
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Blog | {{index . "name"}}</title>
-    </head>
-    <body>
-      <h1>{{index . "msg"}}</h1>
-    </body>
-  </html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Blog | {{index . "name"}}</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <h1>{{index . "msg"}}</h1>
+
+  <form method="post" action="/send">
+    <label for="to">enter email to send:</label>
+    <input type="text" id="toemail" name="to" value="">
+    <label for="message">Message:</label>
+    <input type="text" id="msg" name="message" value="">
+    <button type="submit" id="submit-btn">Submit</button>
+  </form>
+  <pre id="form-result"></pre>
+
+  <!-- <script type="text/javascript"> -->
+  <!--   // Send a ajax request when the submit button is clicked -->
+  <!--   $("#submit-btn").on("click", function () { -->
+  <!--     var tomail = $("#toemail").val(); -->
+  <!--     var message = $("#msg").val(); -->
+
+  <!--     console.log(message) -->
+  <!--     console.log(tomail) -->
+  <!--     $.ajax({ -->
+  <!--       type: "POST", -->
+  <!--       url: "http://localhost:8000/send", -->
+  <!--       data: JSON.stringify({ -->
+  <!--         to: "20bce091@nith.ac.in", -->
+  <!--         message:"someihtiniuhaiuh"  -->
+  <!--       }), -->
+  <!--       processData: false, -->
+  <!--       contentType: "application/json", -->
+  <!--       dataType: "json" -->
+  <!--     }).done( -->
+  <!--       function (data) { -->
+  <!--         $("#form-result").text(JSON.stringify(data, null, 2)); -->
+  <!--       } -->
+  <!--     ).fail( -->
+  <!--       function (data) { -->
+  <!--         $("#form-result").text("POST request failed!"); -->
+  <!--       } -->
+  <!--     ) -->
+  <!--   }); -->
+  <!-- </script> -->
+</body>
+
+</html>
 {{end}}
