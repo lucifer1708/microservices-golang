@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/labstack/echo/v4"
 	"html/template"
 	"io"
 	"net/http"
 	"net/smtp"
-
-	"github.com/labstack/echo/v4"
 )
 
 type TemplateReg struct {
@@ -50,7 +49,7 @@ func Form(c echo.Context) error {
 	tomail := formdata.To
 	to := []string{tomail}
 	msg := formdata.Message
-	SendMail(to, []byte(msg))
+	go SendMail(to, []byte(msg))
 	return c.Render(http.StatusOK, "success.html", map[string]interface{}{
 		"to":  to,
 		"msg": msg,
@@ -60,8 +59,8 @@ func Form(c echo.Context) error {
 
 // Send Mail Function used to send emails
 func SendMail(to []string, message []byte) {
-	from := "example@gmail.com"
-	pswd := "enteryourapppassword"
+	from := "YOUR EMAIL"
+	pswd := "ENTER YOUR PASSWORD"
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
 	auth := smtp.PlainAuth("", from, pswd, smtpHost)
